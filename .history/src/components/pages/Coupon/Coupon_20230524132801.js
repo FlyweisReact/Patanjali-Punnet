@@ -1,0 +1,34 @@
+/** @format */
+
+import React from "react";
+import HOC from "../../layout/HOC";
+import { Button } from "react-bootstrap";
+
+const Coupon = () => {
+  return (
+    <>
+      <section className="component-dashboard">
+        <div className="two-component">
+        <div>
+        <hr style={{ width: "70%" }} />
+        </div>
+          <p>All Patanjali Category</p>
+
+          <Button
+            style={{
+              backgroundColor: "#4099ff",
+              color: "#fff",
+              borderRadius: "0",
+              border: "1px solid #4099ff",
+              padding: "10px",
+            }}
+          >
+            Add New
+          </Button>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default HOC(Coupon);
