@@ -1,0 +1,138 @@
+/** @format */
+
+import HOC from "../../layout/HOC";
+import Table from "react-bootstrap/Table";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Auth } from "../../Auth";
+import { Alert, Badge } from "react-bootstrap";
+
+const NotifyLabour = () => {
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://puneet-goyal-backend.vercel.app/api/v1/admin/orders",
+        Auth
+      );
+      setData(data.orders);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <>
+      <section
+        className="component-dashboard"
+      >
+        <div className="two-component">
+
+        <div>
+            <p> All Product's ( {data?.length} ) </p>
+            <hr />
+          </div>
+
+          <span style={{ color: "black", fontSize: "15px", fontWeight: "400" }}>
+            All Order's ( {data?.length} )
+            <hr style={{ width: "70%" }} />
+          </span>
+        </div>
+
+        {data?.length === 0 || !data ? (
+          <Alert>Orders Not Found</Alert>
+        ) : (
+          <div
+            style={{
+              overflow: "auto",
+              width: "100%",
+            }}
+          >
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th> Number </th>
+                  <th> Customer Name </th>
+                  <th> Customer Phone Number </th>
+                  <th> Payment Status </th>
+                  <th> Grand Total </th>
+                  <th> Discount </th>
+                  <th> Shipping Price </th>
+                  <th> Delivery Status </th>
+                  <th> Product Details </th>
+                  <th> Amount To be Paid </th>
+                  <th> Created At </th>
+                </tr>
+              </thead>
+              <tbody>
+                {data?.map((i, index) => (
+                  <tr key={index}>
+                    <td> #{index + 1} </td>
+                    <td style={{ textTransform: "capitalize" }}>
+                      {" "}
+                      {i.user?.name}{" "}
+                    </td>
+                    <td> {i.user?.phone} </td>
+                    <td> {i.paymentStatus} </td>
+                    <td>
+                      {" "}
+                      <i className="fa-solid fa-indian-rupee-sign"></i>{" "}
+                      {i.grandTotal}{" "}
+                    </td>
+                    <td> {i.discount}% </td>
+                    <td>
+                      {" "}
+                      <i className="fa-solid fa-indian-rupee-sign"></i>{" "}
+                      {i.shippingPrice}{" "}
+                    </td>
+                    <td>
+                      {" "}
+                      {i.delivered === false ? (
+                        <Badge bg="secondary"> Not Delivered Yet</Badge>
+                      ) : (
+                        <Badge bg="success"> Delivered</Badge>
+                      )}{" "}
+                    </td>
+                    <td>
+                      {" "}
+                      {i.products?.map((item, index) => (
+                        <ul
+                          key={index}
+                          style={{
+                            listStyle: "disc",
+                            border: "1px solid black",
+                          }}
+                        >
+                          <li> Product : {item.productName} </li>
+                          <li> Quantity : {item.quantity} </li>
+                          <li>
+                            {" "}
+                            Price :{" "}
+                            <i className="fa-solid fa-indian-rupee-sign"></i>{" "}
+                            {item.total}{" "}
+                          </li>
+                        </ul>
+                      ))}{" "}
+                    </td>
+                    <td>
+                      {" "}
+                      <i className="fa-solid fa-indian-rupee-sign"></i>{" "}
+                      {i.amountToBePaid}{" "}
+                    </td>
+                    <td> {i.createdAt?.slice(0, 10)} </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        )}
+      </section>
+    </>
+  );
+};
+export default HOC(NotifyLabour);
