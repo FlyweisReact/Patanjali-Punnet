@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Auth } from "../../Auth";
 
-const Privacy = () => {
+const Terms = () => {
   const [modalShow, setModalShow] = React.useState(false);
   const [data, setData] = useState([]);
   const [id, setId] = useState("");
@@ -15,9 +15,9 @@ const Privacy = () => {
   const fetchData = async () => {
     try {
       const { data } = await axios.get(
-        "https://puneet-goyal-backend.vercel.app/api/v1/privacy"
+        "https://puneet-goyal-backend.vercel.app/api/v1/terms/"
       );
-      setData(data.privacy);
+      setData(data.terms);
     } catch (err) {
       console.log(err);
     }
@@ -28,17 +28,17 @@ const Privacy = () => {
   }, []);
 
   function MyVerticallyCenteredModal(props) {
-    const [name, setName] = useState("");
+    const [terms, setName] = useState("");
 
     const postHandler = async (e) => {
       e.preventDefault();
       try {
         const data = await axios.put(
-          `https://puneet-goyal-backend.vercel.app/api/v1/privacy/${id}`,
-          { privacy: name }
+          `https://puneet-goyal-backend.vercel.app/api/v1/terms/${id}`,
+          { terms }
         );
         console.log(data);
-        toast.success("Privacy Policy Updated");
+        toast.success("Terms and Condition Updated");
         fetchData();
         setModalShow(false);
       } catch (err) {
@@ -50,12 +50,11 @@ const Privacy = () => {
       e.preventDefault();
       try {
         const data = await axios.post(
-          "https://puneet-goyal-backend.vercel.app/api/v1/privacy",
-          { privacy: name },
-          Auth
+          "https://puneet-goyal-backend.vercel.app/api/v1/terms",
+          { terms }
         );
         console.log(data);
-        toast.success("Privacy Policy Created");
+        toast.success("Terms and Condition Added");
         fetchData();
         setModalShow(false);
       } catch (err) {
@@ -72,13 +71,13 @@ const Privacy = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            {edit ? " Add Privacy Policy" : "Create New Privacy Policy"}
+            {edit ? "Update Terms&Condition" : "Create new"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={edit ? postHandler : AddHandler}>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Terms&Condition</Form.Label>
               <Form.Control
                 type="text"
                 onChange={(e) => setName(e.target.value)}
@@ -97,11 +96,11 @@ const Privacy = () => {
   const deleteHandler = async (id) => {
     try {
       const { data } = await axios.delete(
-        `https://puneet-goyal-backend.vercel.app/api/v1/privacy/${id}`,
+        `https://puneet-goyal-backend.vercel.app/api/v1/terms/${id}`,
         Auth
       );
       console.log(data);
-      toast.success("Privacy Policy Removed");
+      toast.success("Terms Removed");
       fetchData();
     } catch (err) {
       console.log(err);
@@ -119,7 +118,7 @@ const Privacy = () => {
       <section className="component-dashboard">
         <div className="two-component">
           <div>
-            <p> Privacy Policy ( {data?.length} ) </p>
+            <p> Terms&Condition </p>
             <hr />
           </div>
           <Button
@@ -133,20 +132,20 @@ const Privacy = () => {
         </div>
 
         {data?.length === 0 || !data ? (
-          <Alert>Privacy Policy not Found</Alert>
+          <Alert>Terms not Found</Alert>
         ) : (
           <div>
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>PrivacyPolicy</th>
+                  <th>Terms&Condition</th>
                   <th> Action </th>
                 </tr>
               </thead>
               <tbody>
                 {data?.map((i, index) => (
-                  <tr>
-                    <td>{i.privacy}</td>
+                  <tr key={index}>
+                    <td> {i.terms} </td>
                     <td>
                       <span
                         style={{
@@ -180,4 +179,4 @@ const Privacy = () => {
   );
 };
 
-export default HOC(Privacy);
+export default HOC(Terms);

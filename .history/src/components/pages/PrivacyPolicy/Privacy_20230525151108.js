@@ -4,7 +4,6 @@ import { Button, Table, Modal, Form, Alert } from "react-bootstrap";
 import HOC from "../../layout/HOC";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Auth } from "../../Auth";
 
 const Privacy = () => {
   const [modalShow, setModalShow] = React.useState(false);
@@ -50,9 +49,8 @@ const Privacy = () => {
       e.preventDefault();
       try {
         const data = await axios.post(
-          "https://puneet-goyal-backend.vercel.app/api/v1/privacy",
-          { privacy: name },
-          Auth
+          "https://puneet-goyal-backend.vercel.app//api/v1/privacy",
+          { privacy: name }
         );
         console.log(data);
         toast.success("Privacy Policy Created");
@@ -94,21 +92,6 @@ const Privacy = () => {
     );
   }
 
-  const deleteHandler = async (id) => {
-    try {
-      const { data } = await axios.delete(
-        `https://puneet-goyal-backend.vercel.app/api/v1/privacy/${id}`,
-        Auth
-      );
-      console.log(data);
-      toast.success("Privacy Policy Removed");
-      fetchData();
-    } catch (err) {
-      console.log(err);
-      toast.error(err.response.data.message);
-    }
-  };
-
   return (
     <>
       <MyVerticallyCenteredModal
@@ -119,7 +102,7 @@ const Privacy = () => {
       <section className="component-dashboard">
         <div className="two-component">
           <div>
-            <p> Privacy Policy ( {data?.length} ) </p>
+            <p> Privacy Policy </p>
             <hr />
           </div>
           <Button
@@ -155,10 +138,7 @@ const Privacy = () => {
                           alignItems: "center",
                         }}
                       >
-                        <i
-                          className="fa-solid fa-trash"
-                          onClick={() => deleteHandler(i._id)}
-                        ></i>
+                        <i className="fa-solid fa-trash"></i>
                         <i
                           className="fa-solid fa-pen-to-square"
                           onClick={() => {

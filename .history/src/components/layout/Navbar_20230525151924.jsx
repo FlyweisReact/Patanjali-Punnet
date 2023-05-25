@@ -2,7 +2,7 @@
 
 import { RiMenu4Line } from "react-icons/ri";
 import Dropdown from "react-bootstrap/Dropdown";
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal , Form , Button } from 'react-bootstrap'
 import axios from "axios";
 import { useState } from "react";
 import { Auth } from "../Auth";
@@ -11,8 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ hamb, setHamb }) => {
   const AdminName = localStorage.getItem("adminName");
-  const navigate = useNavigate();
-  const [modalShow, setModalShow] = useState(false);
+  const navigate = useNavigate()
 
   function MyVerticallyCenteredModal(props) {
     const [oldPassword, setOldPassword] = useState("");
@@ -24,22 +23,18 @@ const Navbar = ({ hamb, setHamb }) => {
       try {
         const data = await axios.put(
           `https://puneet-goyal-backend.vercel.app/api/v1/password/update`,
-          {
-            oldPassword,
-            newPassword,
-            confirmPassword,
-          },
           Auth
         );
         console.log(data);
-        toast.success("Password Updated Successfully");
-        props.onHide();
-        navigate("/");
+        toast.success("Password Updated Successfully")
+        props.onHide()
+        navigate('/') 
       } catch (err) {
         console.log(err);
-        toast.error(err.response.data.message);
+        toast.error(err.response.data.message)
       }
     };
+
 
     return (
       <Modal
@@ -50,7 +45,7 @@ const Navbar = ({ hamb, setHamb }) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Edit Profile
+          Edit Profile
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -63,17 +58,17 @@ const Navbar = ({ hamb, setHamb }) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>New Password</Form.Label>
+              <Form.Label>Old Password</Form.Label>
               <Form.Control
                 type="password"
-                onChange={(e) => setnewPassword(e.target.value)}
+                onChange={(e) => setOldPassword(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Re-Type New Password</Form.Label>
+              <Form.Label>Old Password</Form.Label>
               <Form.Control
                 type="password"
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => setOldPassword(e.target.value)}
               />
             </Form.Group>
 
@@ -86,12 +81,9 @@ const Navbar = ({ hamb, setHamb }) => {
     );
   }
 
+
   return (
     <>
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
       <div
         style={{
           display: "flex",
@@ -128,9 +120,7 @@ const Navbar = ({ hamb, setHamb }) => {
                   ></Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => setModalShow(true)}>
-                      Update Password
-                    </Dropdown.Item>
+                    <Dropdown.Item>Update Password</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>

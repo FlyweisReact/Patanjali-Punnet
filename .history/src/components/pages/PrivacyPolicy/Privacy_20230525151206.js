@@ -97,11 +97,11 @@ const Privacy = () => {
   const deleteHandler = async (id) => {
     try {
       const { data } = await axios.delete(
-        `https://puneet-goyal-backend.vercel.app/api/v1/privacy/${id}`,
+        `https://puneet-goyal-backend.vercel.app/api/v1/terms/${id}`,
         Auth
       );
       console.log(data);
-      toast.success("Privacy Policy Removed");
+      toast.success("Terms Removed");
       fetchData();
     } catch (err) {
       console.log(err);
@@ -119,7 +119,7 @@ const Privacy = () => {
       <section className="component-dashboard">
         <div className="two-component">
           <div>
-            <p> Privacy Policy ( {data?.length} ) </p>
+            <p> Privacy Policy </p>
             <hr />
           </div>
           <Button
@@ -155,10 +155,7 @@ const Privacy = () => {
                           alignItems: "center",
                         }}
                       >
-                        <i
-                          className="fa-solid fa-trash"
-                          onClick={() => deleteHandler(i._id)}
-                        ></i>
+                        <i className="fa-solid fa-trash"></i>
                         <i
                           className="fa-solid fa-pen-to-square"
                           onClick={() => {

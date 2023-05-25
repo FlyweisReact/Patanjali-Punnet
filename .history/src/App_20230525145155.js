@@ -39,6 +39,8 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/help" element={<Help />} />
         <Route path="/Orders" element={<NotifyLabour />} />
+
+
         <Route path="/Notice/Customer" element={<NotifyCustomer />} />
         <Route path="/common" element={<CommonUser />} />
         <Route path="/pay" element={<Payment />} />

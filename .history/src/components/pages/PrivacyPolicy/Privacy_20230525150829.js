@@ -1,16 +1,15 @@
 /** @format */
 import React, { useEffect, useState } from "react";
-import { Button, Table, Modal, Form, Alert } from "react-bootstrap";
+import { Button, Table, Modal, Form } from "react-bootstrap";
 import HOC from "../../layout/HOC";
+import {  AiFillEdit } from "react-icons/ai";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Auth } from "../../Auth";
 
 const Privacy = () => {
   const [modalShow, setModalShow] = React.useState(false);
   const [data, setData] = useState([]);
-  const [id, setId] = useState("");
-  const [edit, setEdit] = useState(false);
+  const [ id , setId ] = useState('')
 
   const fetchData = async () => {
     try {
@@ -46,23 +45,6 @@ const Privacy = () => {
       }
     };
 
-    const AddHandler = async (e) => {
-      e.preventDefault();
-      try {
-        const data = await axios.post(
-          "https://puneet-goyal-backend.vercel.app/api/v1/privacy",
-          { privacy: name },
-          Auth
-        );
-        console.log(data);
-        toast.success("Privacy Policy Created");
-        fetchData();
-        setModalShow(false);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     return (
       <Modal
         {...props}
@@ -72,11 +54,17 @@ const Privacy = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            {edit ? " Add Privacy Policy" : "Create New Privacy Policy"}
+            Add Privacy Policy
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={edit ? postHandler : AddHandler}>
+          <Form
+            style={{
+              color: "black",
+              margin: "auto",
+            }}
+            onSubmit={postHandler}
+          >
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -94,61 +82,42 @@ const Privacy = () => {
     );
   }
 
-  const deleteHandler = async (id) => {
-    try {
-      const { data } = await axios.delete(
-        `https://puneet-goyal-backend.vercel.app/api/v1/privacy/${id}`,
-        Auth
-      );
-      console.log(data);
-      toast.success("Privacy Policy Removed");
-      fetchData();
-    } catch (err) {
-      console.log(err);
-      toast.error(err.response.data.message);
-    }
-  };
-
   return (
     <>
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
-
-      <section className="component-dashboard">
+  
+      <section
+      className="component-dashboard"
+      >
         <div className="two-component">
-          <div>
-            <p> Privacy Policy ( {data?.length} ) </p>
+        <div>
+            <p> Privacy Policy  </p>
             <hr />
           </div>
-          <Button
-            onClick={() => {
-              setEdit(false);
-              setModalShow(true);
-            }}
-          >
-            Create New
-          </Button>
+        
         </div>
 
         {data?.length === 0 || !data ? (
-          <Alert>Privacy Policy not Found</Alert>
+          <Alert>Terms not Found</Alert>
         ) : (
-          <div>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>PrivacyPolicy</th>
-                  <th> Action </th>
-                </tr>
-              </thead>
-              <tbody>
-                {data?.map((i, index) => (
-                  <tr>
-                    <td>{i.privacy}</td>
-                    <td>
-                      <span
+
+        <div>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>PrivacyPolicy</th>
+                <th> Action </th>
+              </tr>
+            </thead>
+            <tbody>
+            {data?.map((i, index) => (
+              <tr>
+                <td>{i.privacy}</td>
+                <td >
+                <span
                         style={{
                           display: "flex",
                           gap: "10px",
@@ -157,23 +126,22 @@ const Privacy = () => {
                       >
                         <i
                           className="fa-solid fa-trash"
-                          onClick={() => deleteHandler(i._id)}
                         ></i>
                         <i
                           className="fa-solid fa-pen-to-square"
                           onClick={() => {
-                            setId(i._id);
-                            setEdit(true);
-                            setModalShow(true);
-                          }}
+                      setId(data?.privacy?._id)
+                      setModalShow(true);
+                    }}
                         ></i>
                       </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
+             
+                </td>
+              </tr>
+            )}
+            </tbody>
+          </Table>
+        </div>
         )}
       </section>
     </>

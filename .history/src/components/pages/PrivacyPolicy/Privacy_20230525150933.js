@@ -4,7 +4,6 @@ import { Button, Table, Modal, Form, Alert } from "react-bootstrap";
 import HOC from "../../layout/HOC";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Auth } from "../../Auth";
 
 const Privacy = () => {
   const [modalShow, setModalShow] = React.useState(false);
@@ -46,23 +45,6 @@ const Privacy = () => {
       }
     };
 
-    const AddHandler = async (e) => {
-      e.preventDefault();
-      try {
-        const data = await axios.post(
-          "https://puneet-goyal-backend.vercel.app/api/v1/privacy",
-          { privacy: name },
-          Auth
-        );
-        console.log(data);
-        toast.success("Privacy Policy Created");
-        fetchData();
-        setModalShow(false);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     return (
       <Modal
         {...props}
@@ -72,11 +54,17 @@ const Privacy = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            {edit ? " Add Privacy Policy" : "Create New Privacy Policy"}
+            Add Privacy Policy
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={edit ? postHandler : AddHandler}>
+          <Form
+            style={{
+              color: "black",
+              margin: "auto",
+            }}
+            onSubmit={postHandler}
+          >
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -94,21 +82,6 @@ const Privacy = () => {
     );
   }
 
-  const deleteHandler = async (id) => {
-    try {
-      const { data } = await axios.delete(
-        `https://puneet-goyal-backend.vercel.app/api/v1/privacy/${id}`,
-        Auth
-      );
-      console.log(data);
-      toast.success("Privacy Policy Removed");
-      fetchData();
-    } catch (err) {
-      console.log(err);
-      toast.error(err.response.data.message);
-    }
-  };
-
   return (
     <>
       <MyVerticallyCenteredModal
@@ -119,17 +92,9 @@ const Privacy = () => {
       <section className="component-dashboard">
         <div className="two-component">
           <div>
-            <p> Privacy Policy ( {data?.length} ) </p>
+            <p> Privacy Policy </p>
             <hr />
           </div>
-          <Button
-            onClick={() => {
-              setEdit(false);
-              setModalShow(true);
-            }}
-          >
-            Create New
-          </Button>
         </div>
 
         {data?.length === 0 || !data ? (
@@ -155,15 +120,11 @@ const Privacy = () => {
                           alignItems: "center",
                         }}
                       >
-                        <i
-                          className="fa-solid fa-trash"
-                          onClick={() => deleteHandler(i._id)}
-                        ></i>
+                        <i className="fa-solid fa-trash"></i>
                         <i
                           className="fa-solid fa-pen-to-square"
                           onClick={() => {
                             setId(i._id);
-                            setEdit(true);
                             setModalShow(true);
                           }}
                         ></i>

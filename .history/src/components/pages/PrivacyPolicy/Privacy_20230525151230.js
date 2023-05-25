@@ -119,7 +119,7 @@ const Privacy = () => {
       <section className="component-dashboard">
         <div className="two-component">
           <div>
-            <p> Privacy Policy ( {data?.length} ) </p>
+            <p> Privacy Policy </p>
             <hr />
           </div>
           <Button
