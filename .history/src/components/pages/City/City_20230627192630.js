@@ -16,23 +16,20 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Auth } from "../../Auth";
 
+
 const City = () => {
   const [modalShow, setModalShow] = React.useState(false);
   const [data, setData] = useState([]);
   const [id, setId] = useState("");
   const [edit, setEdit] = useState(false);
 
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("")
 
   const fetchHandler = async () => {
     try {
       const { data } = await axios.get(
         "https://puneet-goyal-backend.vercel.app/api/v1/admin/products",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        Auth
       );
       setData(data.products);
     } catch (err) {
@@ -276,7 +273,7 @@ const City = () => {
                 setModalShow(true);
               }}
             >
-              <i className="fa-solid fa-plus mr-1"></i> Create New
+            <i className="fa-solid fa-plus mr-1"></i>   Create New
             </Button>
           </div>
         </div>

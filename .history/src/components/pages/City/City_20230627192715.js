@@ -30,7 +30,7 @@ const City = () => {
         "https://puneet-goyal-backend.vercel.app/api/v1/admin/products",
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Auhtorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OWFlOGQ2MjY5YTY5YjRhYTc2YmVkNCIsImlhdCI6MTY4Nzg3NDMxOCwiZXhwIjoxNjg3OTYwNzE4fQ.g_6yoKsJ_eZe-JM1G0NhxQqF-PPIEzm2ApdJRaCVU4M`,
           },
         }
       );

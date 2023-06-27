@@ -30,7 +30,7 @@ const City = () => {
         "https://puneet-goyal-backend.vercel.app/api/v1/admin/products",
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Auhtorization: `Bearer ${token}`,
           },
         }
       );
