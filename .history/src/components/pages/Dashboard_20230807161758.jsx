@@ -4,6 +4,7 @@ import HOC from "../layout/HOC";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Auth } from "../Auth";
 import {MdCategory} from 'react-icons/md'
 import {AiFillSwitcher} from 'react-icons/ai'
 
@@ -40,11 +41,7 @@ const Dashboard = () => {
     try {
       const { data } = await axios.get(
         "https://puneet-goyal-backend.vercel.app/api/v1/getAllCategory",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        Auth
       );
       setPatanjaliCount(data.categories.length);
     } catch (e) {
@@ -69,11 +66,7 @@ const Dashboard = () => {
     try {
       const { data } = await axios.get(
         "https://puneet-goyal-backend.vercel.app/api/v1/admin/orders",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        Auth
       );
       setOrderCount(data.orders.length);
     } catch (e) {
@@ -86,11 +79,7 @@ const Dashboard = () => {
     try {
       const { data } = await axios.get(
         "https://puneet-goyal-backend.vercel.app/api/v1/admin/products",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        Auth
       );
       setProductCount(data.products.length);
     } catch (e) {

@@ -6,6 +6,7 @@ import HOC from "../../layout/HOC";
 import Table from "react-bootstrap/Table";
 import { toast } from "react-toastify";
 import { Alert, Badge } from "react-bootstrap";
+import { Auth } from "../../Auth";
 
 const Customers = () => {
   const [data, setData] = useState([]);
@@ -36,11 +37,7 @@ const Customers = () => {
     try {
       const data = await axios.delete(
         `https://puneet-goyal-backend.vercel.app/api/v1/admin/user/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        Auth
       );
       console.log(data);
       toast.success("User deleted");

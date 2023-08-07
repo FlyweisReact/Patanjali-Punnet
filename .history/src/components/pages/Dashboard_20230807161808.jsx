@@ -4,6 +4,7 @@ import HOC from "../layout/HOC";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Auth } from "../Auth";
 import {MdCategory} from 'react-icons/md'
 import {AiFillSwitcher} from 'react-icons/ai'
 

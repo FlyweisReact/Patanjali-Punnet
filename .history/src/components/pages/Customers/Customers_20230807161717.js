@@ -6,6 +6,7 @@ import HOC from "../../layout/HOC";
 import Table from "react-bootstrap/Table";
 import { toast } from "react-toastify";
 import { Alert, Badge } from "react-bootstrap";
+import { Auth } from "../../Auth";
 
 const Customers = () => {
   const [data, setData] = useState([]);

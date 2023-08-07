@@ -116,7 +116,7 @@ const City = () => {
       try {
         const { data } = await axios.post(
           "https://puneet-goyal-backend.vercel.app/api/v1/admin/product/new",
-          { name, description, price, category, images: [url], Stock },
+          { name, description, price, category, images: url, Stock },
           Auth
         );
         console.log(data);
@@ -134,7 +134,7 @@ const City = () => {
       try {
         const { data } = await axios.put(
           `https://puneet-goyal-backend.vercel.app/api/v1/admin/product/${id}`,
-          { name, description, price, category, images: [url], Stock },
+          { name, description, price, category, images: url, Stock },
           Auth
         );
         console.log(data);
@@ -210,9 +210,9 @@ const City = () => {
                   onChange={(e) => setCategory(e.target.value)}
                 >
                   <option>-- Select Category --</option>
-                  <option>--All Patanjali Categories--</option>
                   {patanjali?.map((i, index) => (
                     <>
+                      <option>--All Patanjali Categories--</option>
                       <option key={index} value={i._id}>
                         {" "}
                         {i.name}{" "}
@@ -222,6 +222,7 @@ const City = () => {
                   <option>--All Non-Patanjali Categories--</option>
                   {nonPatanjali?.map((i, index) => (
                     <>
+                     
                       <option key={index} value={i._id}>
                         {" "}
                         {i.name}{" "}

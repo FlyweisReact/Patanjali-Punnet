@@ -134,7 +134,7 @@ const City = () => {
       try {
         const { data } = await axios.put(
           `https://puneet-goyal-backend.vercel.app/api/v1/admin/product/${id}`,
-          { name, description, price, category, images: [url], Stock },
+          { name, description, price, category, images: url, Stock },
           Auth
         );
         console.log(data);
